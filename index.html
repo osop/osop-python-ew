@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Osop-python-ew by osop</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Osop-python-ew</h1>
+        <p>Python wrapper for accessing an Earthworm shared memory ring.</p>
+
+        <p class="view"><a href="https://github.com/osop/osop-python-ew">View the Project on GitHub <small>osop/osop-python-ew</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/osop/osop-python-ew/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/osop/osop-python-ew/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/osop/osop-python-ew">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>PythonEw</h1>
+
+<p>By OSOP </p>
+
+<p><a href="http://www.osop.com.pa">http://www.osop.com.pa</a></p>
+
+<p><img src="http://www.osop.com.pa/wp-content/uploads/2012/02/ss.png" alt="OSOP LOGO"></p>
+
+<p>Python wrapper for accessing an Earthworm shared memory ring.
+Earthworm is a set of opensource programs, tools and libraries that are used in the development of software for maintaining seismic networks, research and other seismological and geophysical applications. 
+<a href="http://vps.isti.com/trac/ew/">http://vps.isti.com/trac/ew/</a></p>
+
+<p>The main objective of these wrapper-modules is to make it easier for people to contribute to the Earthworm project; developing Earthworm modules using these wrappers is truly a joy as it enables developers to have directy access to memory rings whilst enjoying all the functionality that <em>Python</em> itself brings to the table. Introducing <em>Python</em> into the Earthworm picture will allow new people to come in and contribute.</p>
+
+<p>Although these modules are far from complete, they are currently quite functional and usable; the <code>Tracebuf2</code> module specially, is already being used in production scenarios, and it has proven to be a very usefull tool.</p>
+
+<p><strong>MODULE OVERVIEW</strong></p>
+
+<p>A module consists of one <em>C</em> and two <em>Python</em> sources. The <em>C</em> source are basically Python-wrapped functions that allow Read/Write operations of a certain Earthworm datatype. One of the <em>Python</em> source contains interfaces to the <em>C</em> wrapped functions; the other <em>Python</em> source is a basic setup tool.</p>
+
+<p>Example:</p>
+
+<pre><code>Tracebuf2
+    tracebuf2module/
+        tracebuf2module.c
+        tracebuf2ring.py
+        trace_setup.py
+</code></pre>
+
+<p>In order to use a module from <em>Python</em>, the <em>C</em> source, in this case <code>tracebuf2module.c</code>, needs to be compiled into a dynamically linked library that <em>Python</em> can load.</p>
+
+<p><strong>HOW TO INSTALL</strong></p>
+
+<p>In order to follow theses steps, Earthworm needs to be previously
+installed in your computer. Also, note that these are steps for GNU/Linux - UNIX only.</p>
+
+<ol>
+<li><p>Use the makefile included in <code>ring_access/Makefile</code> to create <code>ringwriter.o</code> and <code>ringreader.o</code>. Once created, copy them into the Earthworm's <code>/bin/</code> directory. Note that you need to edit the <code>INCLUDE</code> and <code>LIBRARIES</code> variables in the makefile to match your Earthworm installation. These are libraries and binaries needed by all the modules.</p></li>
+<li><p>Copy <code>ringwriter.h</code> and <code>ringreader.h</code> into the Earthworm's <code>/include/</code> directory.</p></li>
+<li>
+<p>Choose the module you want to compile and simply run the corresponding python setup script.
+Example: </p>
+
+<p><code>python trace_setup.py build</code></p>
+</li>
+</ol><p>This will create a dynamically linked library corresponding to the module, and it's the one
+that the python module will try to load.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/osop">osop</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
