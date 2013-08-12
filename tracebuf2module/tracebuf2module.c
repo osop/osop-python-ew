@@ -39,11 +39,23 @@ static PyObject * ring_write(PyObject * self, PyObject * args, PyObject * kws)
                          "sta", "net", "chan", "loc", "version", "datatype", 
                          "quality", "pad", "samples", "ring", "module", "sequence", NULL};
     int parsed;
+    TRACE2_HEADER trace_header;
+    TRACE2_HEADER_AND_SAMPS trace_data;
 
     parsed = PyArg_ParseTupleAndKeywords(args, kws, "iidddssssssssOsss", keywords, &pinno, 
                                          &nsamp, &starttime, &endtime, &samprate, &sta, &net,
                                          &chan, &loc, &version, &datatype, &quality, &pad,
                                          &sample_list, &ring, &module, &sequence);	
+
+    if ((sizeof(trace_header.sta) < strlen(sta) + 1) || 
+        (sizeof(trace_header.net) < strlen(net) + 1) ||
+        (sizeof(trace_header.chan) < strlen(chan) + 1) ||
+        (sizeof(trace_header.loc) < strlen(loc)) + 1 ||
+        (sizeof(trace_header.datatype) < strlen(datatype) + 1)) {
+        printf("Tracebuf2: Data field too long\n");
+        return NULL;
+    }
+
 
     if (!parsed) {
 	    printf("Tracebuf2: Wrong args! \n");
@@ -51,8 +63,8 @@ static PyObject * ring_write(PyObject * self, PyObject * args, PyObject * kws)
     }
 
     else {
-        int tracesize = sizeof(TRACE2_HEADER) + (sizeof(int) * nsamp); 
-        if (tracesize > MAX_TRACEBUF_SIZ) {
+        int tracesize = sizeof(TRACE2_HEADER) + (sizeof(int) * nsamp);
+        if ((sizeof(int) * nsamp) > MAX_TRACEBUF_SIZ - sizeof(TRACE2_HEADER)) {
             printf("Tracebuf2: Message too long! \n");
             return NULL;
 	    }
@@ -71,8 +83,6 @@ static PyObject * ring_write(PyObject * self, PyObject * args, PyObject * kws)
 	
         char * raw_data;
 	    char *params[] = {ring, "TYPE_TRACEBUF2", module, sequence};
-	    TRACE2_HEADER trace_header;
-	    TRACE2_HEADER_AND_SAMPS trace_data;
 
 	    trace_header.pinno = pinno;
 	    trace_header.nsamp = nsamp;
