@@ -51,8 +51,8 @@ static PyObject * ring_write(PyObject * self, PyObject * args, PyObject * kws)
     }
 
     else {
-        int tracesize = sizeof(TRACE2_HEADER) + (sizeof(int) * nsamp); 
-        if (tracesize > MAX_TRACEBUF_SIZ) {
+        int tracesize = sizeof(TRACE2_HEADER) + (sizeof(int) * nsamp);
+        if ((sizeof(int) * nsamp) > MAX_TRACEBUF_SIZ - sizeof(TRACE2_HEADER)) {
             printf("Tracebuf2: Message too long! \n");
             return NULL;
 	    }
